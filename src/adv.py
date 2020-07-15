@@ -1,4 +1,7 @@
+
+import sys
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -22,6 +25,7 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 
+
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -36,6 +40,64 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+player = Player(input("Select a name: "), room["outside"])
+print(f"Welcome {player.name}. Your location is: {player.location}")
+
+way = ""
+directions = ["north", "east", "west", "south", "quit"]
+
+def main_prompt():
+	way = input(f"{player.name}, choose a direction: ")
+	while way.lower() not in directions:
+		print("Please choose a valid direction.")
+		way = input(": ")
+	if way.lower() == "quit":
+		sys.exit()
+	else:
+		move_player(way.lower())
+
+def move_player(direction):
+    if direction == "north":
+        if player.location.n_to is None:
+            print("The way is blocked! Choose again!")
+        else:
+            player.location = player.location.n_to
+            print(f"You are now in the: {player.location}")
+        
+    elif direction == "east":
+        if player.location.e_to is None:
+            print("The way is blocked! Choose again!")
+        else:
+            player.location = player.location.e_to
+            print(f"You are now in the: {player.location}")
+                    
+    elif direction == "west":
+        if player.location.w_to is None:
+            print("The way is blocked! Choose again!")
+        else:
+            player.location = player.location.w_to
+            print(f"You are now in the: {player.location}")
+            
+    elif direction == "south":
+        if player.location.s_to is None:
+            print("The way is blocked! Choose again!")
+        else:
+            player.location = player.location.s_to
+            print(f"You are now in the: {player.location}")
+    
+            
+def main_game_loop():
+	while True:
+	    main_prompt()
+  
+main_game_loop()
+
+
+
+
+
+
+    
 
 # Make a new player object that is currently in the 'outside' room.
 
