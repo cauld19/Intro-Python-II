@@ -75,20 +75,17 @@ def add_items(name):
                 if i.name == name:
                     player1.inventory.append(i)
             remove_room_item()
-            # display_player_items()
             
 def add_item_room(item):
     for k, v in room.items():
         if v == player1.location:
             room[k].inventory.append(item)
     display_items()
-    
             
 def remove_player_item(name):
     for item in player1.inventory:
         if name == item.name:
             player1.inventory.remove(item)           
-    # display_player_items()
             
 def remove_room_item():
     for k, v in room.items():
