@@ -5,7 +5,9 @@ from room import Room
 from player import Player
 from item import Item
 
+
 # Declare all the rooms
+
 
 items = [Item("sword", "a steel sword"), Item("dagger", "a marble dagger"), Item("shield", "a largely useless wood shield"), Item("amelet", "A magical amelet that brings only bad luck to its owner"), Item("cape", "A wool cape that can be used for sleeping or fashion")]
 
@@ -45,6 +47,7 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+
 player1 = Player(room["outside"], [])
 
 def clear_screen():
@@ -74,7 +77,10 @@ def add_items(name):
             for i in room[k].inventory:
                 if i.name == name:
                     player1.inventory.append(i)
+                    index = items.index(i)
+                    items[index].on_take(i, player1)
             remove_room_item()
+            
             
 def add_item_room(item):
     for k, v in room.items():
@@ -82,10 +88,11 @@ def add_item_room(item):
             room[k].inventory.append(item)
     display_items()
             
-def remove_player_item(name):
+def remove_player_item(name, index):
     for item in player1.inventory:
         if name == item.name:
-            player1.inventory.remove(item)           
+            player1.inventory.remove(item)
+            items[index].on_drop(item, player1)          
             
 def remove_room_item():
     for k, v in room.items():
@@ -97,7 +104,8 @@ def remove_room_item():
 def drop_items(name):
     for item in player1.inventory:
         if name == item.name:
-            remove_player_item(name)
+            index = items.index(item)
+            remove_player_item(name, index)
             add_item_room(item)
             
 def title_screen():
