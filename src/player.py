@@ -2,10 +2,10 @@
 # currently.
 
 class Player:
-    def __init__(self, name, location, finish=True):
-        self.name = name
+    def __init__(self, location, inventory=None, name="mario"):
         self.location = location
-        self.finish = finish
+        self.inventory = inventory
+        self.name = name
         
     def __str__(self):
         return f"name: {self.name}, Location: {self.location}"
